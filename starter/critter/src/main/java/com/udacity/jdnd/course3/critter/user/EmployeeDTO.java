@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.DayOfWeek;
+import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -18,7 +19,7 @@ public class EmployeeDTO {
 
     private String name;
 
-    private Set<EmployeeSkill> skills;
+    private Set<EmployeeSkill> skills = Collections.emptySet();
 
-    private Set<DayOfWeek> daysAvailable;
+    private Set<DayOfWeek> daysAvailable = Collections.emptySet();
 }

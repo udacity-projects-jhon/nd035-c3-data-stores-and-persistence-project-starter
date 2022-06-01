@@ -1,6 +1,7 @@
 package com.udacity.jdnd.course3.critter.user;
 
 import com.udacity.jdnd.course3.critter.user.service.CustomerService;
+import com.udacity.jdnd.course3.critter.user.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,10 +26,11 @@ import java.util.Set;
 public class UserController {
 
     private final CustomerService customerService;
-
+    private final EmployeeService employeeService;
     @Autowired
-    public UserController(CustomerService customerService) {
+    public UserController(CustomerService customerService, EmployeeService employeeService) {
         this.customerService = customerService;
+        this.employeeService = employeeService;
     }
 
     @PostMapping("/customer")
@@ -48,12 +50,12 @@ public class UserController {
 
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        return employeeService.save(employeeDTO);
     }
 
     @PostMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        return employeeService.getById(employeeId);
     }
 
     @PutMapping("/employee/{employeeId}")

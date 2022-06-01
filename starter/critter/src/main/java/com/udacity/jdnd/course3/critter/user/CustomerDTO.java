@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,5 +25,5 @@ public class CustomerDTO {
 
     private String notes;
 
-    private List<Long> petIds;
+    private List<Long> petIds = Collections.emptyList();
 }

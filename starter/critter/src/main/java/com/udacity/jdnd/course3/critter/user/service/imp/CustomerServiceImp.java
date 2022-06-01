@@ -23,14 +23,14 @@ public class CustomerServiceImp implements CustomerService {
     @Override
     public List<CustomerDTO> getAll() {
         return customerRepository.findAll().stream()
-                .map(UserMapper.INSTANCE::customerToCustomerDTO)
+                .map(UserMapper.USER_MAPPER::customerToCustomerDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public CustomerDTO save(CustomerDTO customerDTO) {
-        Customer customer = UserMapper.INSTANCE.customerDTOToCustomer(customerDTO);
+        Customer customer = UserMapper.USER_MAPPER.customerDTOToCustomer(customerDTO);
         Customer customerSaved = customerRepository.save(customer);
-        return UserMapper.INSTANCE.customerToCustomerDTO(customerSaved);
+        return UserMapper.USER_MAPPER.customerToCustomerDTO(customerSaved);
     }
 }
