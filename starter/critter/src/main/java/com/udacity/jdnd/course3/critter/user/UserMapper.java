@@ -15,8 +15,10 @@ import java.util.stream.Collectors;
 public interface UserMapper {
     UserMapper USER_MAPPER = Mappers.getMapper(UserMapper.class);
 
+    // TODO: list pets
     Customer customerDTOToCustomer(CustomerDTO customerDTO);
 
+    // TODO: list pets
     CustomerDTO customerToCustomerDTO(Customer customer);
 
     default Employee employeeDTOToEmployee(EmployeeDTO employeeDTO) {
@@ -35,14 +37,7 @@ public interface UserMapper {
 
         employee.setSkills(skillEntities);
 
-        Set<DayOfWeekEntity> dayOfWeekEntities = employeeDTO.getDaysAvailable().stream()
-                .map(dayOfWeek -> {
-                    DayOfWeekEntity dayOfWeekEntity = new DayOfWeekEntity();
-                    dayOfWeekEntity.setEmployee(employee);
-                    dayOfWeekEntity.setDayOfWeek(dayOfWeek);
-
-                    return dayOfWeekEntity;
-                }).collect(Collectors.toSet());
+        Set<DayOfWeekEntity> dayOfWeekEntities = daysOfWeekToDayOfWeekEntity(employeeDTO.getDaysAvailable(), employee);
 
         employee.setDaysAvailable(dayOfWeekEntities);
 
@@ -61,12 +56,27 @@ public interface UserMapper {
 
         employeeDTO.setSkills(employeeSkills);
 
-        Set<DayOfWeek> dayOfWeeks = employee.getDaysAvailable().stream()
-                .map(DayOfWeekEntity::getDayOfWeek)
-                .collect(Collectors.toSet());
+        Set<DayOfWeek> dayOfWeeks = daysOfWeekEntityToDayOfWeek(employee);
 
         employeeDTO.setDaysAvailable(dayOfWeeks);
 
         return employeeDTO;
+    }
+
+    default Set<DayOfWeek> daysOfWeekEntityToDayOfWeek(Employee employee) {
+        return employee.getDaysAvailable().stream()
+                .map(DayOfWeekEntity::getDayOfWeek)
+                .collect(Collectors.toSet());
+    }
+
+    default Set<DayOfWeekEntity> daysOfWeekToDayOfWeekEntity(Set<DayOfWeek> dayOfWeeks, Employee employee) {
+        return dayOfWeeks.stream()
+                .map(dayOfWeek -> {
+                    DayOfWeekEntity dayOfWeekEntity = new DayOfWeekEntity();
+                    dayOfWeekEntity.setEmployee(employee);
+                    dayOfWeekEntity.setDayOfWeek(dayOfWeek);
+
+                    return dayOfWeekEntity;
+                }).collect(Collectors.toSet());
     }
 }

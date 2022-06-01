@@ -8,6 +8,9 @@ import com.udacity.jdnd.course3.critter.user.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.util.Set;
+
 import static com.udacity.jdnd.course3.critter.user.UserMapper.USER_MAPPER;
 
 @Service
@@ -32,5 +35,15 @@ public class EmployeeServiceImp implements EmployeeService {
                 .orElseThrow(NotFound::new);
 
         return USER_MAPPER.employeeToEmployeeDTO(employee);
+    }
+
+    @Override
+    public void setAvailability(Set<DayOfWeek> daysAvailable, long employeeId) {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(NotFound::new);
+
+        employee.setDaysAvailable(USER_MAPPER.daysOfWeekToDayOfWeekEntity(daysAvailable, employee));
+
+        employeeRepository.save(employee);
     }
 }

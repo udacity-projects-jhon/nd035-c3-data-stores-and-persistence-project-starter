@@ -4,6 +4,7 @@ import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -22,6 +23,6 @@ public class EmployeeSkillEntity {
     @Enumerated(EnumType.STRING)
     private EmployeeSkill employeeSkill;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Employee employee;
 }

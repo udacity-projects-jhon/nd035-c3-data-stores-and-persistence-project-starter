@@ -3,6 +3,7 @@ package com.udacity.jdnd.course3.critter.user.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -22,6 +23,6 @@ public class DayOfWeekEntity {
     @Enumerated(EnumType.STRING)
     private DayOfWeek dayOfWeek;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Employee employee;
 }
