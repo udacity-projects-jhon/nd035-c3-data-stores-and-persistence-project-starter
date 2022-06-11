@@ -137,7 +137,7 @@ class CritterFunctionalTest {
     }
 
     @Test
-    void testFindEmployeesByServiceAndTime() { // TODO
+    void testFindEmployeesByServiceAndTime() {
         EmployeeDTO emp1 = createEmployeeDTO();
         EmployeeDTO emp2 = createEmployeeDTO();
         EmployeeDTO emp3 = createEmployeeDTO();
@@ -170,11 +170,11 @@ class CritterFunctionalTest {
 
         Set<Long> eIds2 = userController.findEmployeesForService(er2).stream().map(EmployeeDTO::getId).collect(Collectors.toSet());
         Set<Long> eIds2expected = Sets.newHashSet(emp3n.getId());
-        Assertions.assertEquals(eIds2, eIds2expected);
+        Assertions.assertEquals(eIds2expected, eIds2);
     }
 
     @Test
-    void testSchedulePetsForServiceWithEmployee() {
+    void testSchedulePetsForServiceWithEmployee() { // TODO
         EmployeeDTO employeeTemp = createEmployeeDTO();
         employeeTemp.setDaysAvailable(Sets.newHashSet(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY));
         EmployeeDTO employeeDTO = userController.saveEmployee(employeeTemp);

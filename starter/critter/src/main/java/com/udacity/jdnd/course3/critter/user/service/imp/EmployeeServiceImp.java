@@ -2,6 +2,7 @@ package com.udacity.jdnd.course3.critter.user.service.imp;
 
 import com.udacity.jdnd.course3.critter.exception.NotFound;
 import com.udacity.jdnd.course3.critter.user.EmployeeDTO;
+import com.udacity.jdnd.course3.critter.user.EmployeeRequestDTO;
 import com.udacity.jdnd.course3.critter.user.model.Employee;
 import com.udacity.jdnd.course3.critter.user.repository.EmployeeRepository;
 import com.udacity.jdnd.course3.critter.user.service.EmployeeService;
@@ -9,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.udacity.jdnd.course3.critter.user.UserMapper.USER_MAPPER;
 
@@ -45,5 +48,16 @@ public class EmployeeServiceImp implements EmployeeService {
         employee.setDaysAvailable(USER_MAPPER.daysOfWeekToDayOfWeekEntity(daysAvailable, employee));
 
         employeeRepository.save(employee);
+    }
+
+    @Override
+    public List<EmployeeDTO> findEmployeesForService(EmployeeRequestDTO employeeDTO) {
+        DayOfWeek dayOfWeek = employeeDTO.getDate().getDayOfWeek();
+        return employeeRepository.findAllByDaysAvailableAndInSkills(dayOfWeek,
+                        employeeDTO.getSkills(), employeeDTO.getSkills().size()
+                )
+                .stream()
+                .map(USER_MAPPER::employeeToEmployeeDTO)
+                .collect(Collectors.toList());
     }
 }
