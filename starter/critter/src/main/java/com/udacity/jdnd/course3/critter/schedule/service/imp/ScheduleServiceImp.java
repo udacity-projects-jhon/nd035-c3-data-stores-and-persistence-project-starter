@@ -11,6 +11,7 @@ import com.udacity.jdnd.course3.critter.user.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,7 @@ public class ScheduleServiceImp implements ScheduleService {
     }
 
     @Override
+    @Transactional
     public ScheduleDTO createSchedule(ScheduleDTO scheduleDTO) {
         List<Employee> employees = employeeRepository.findAllById(scheduleDTO.getEmployeeIds());
 
@@ -52,23 +54,27 @@ public class ScheduleServiceImp implements ScheduleService {
     }
 
     @Override
+    @Transactional
     public List<ScheduleDTO> getAllSchedules() {
         return scheduleRepository.findAll().stream().map(SCHEDULE_MAPPER::scheduleToScheduleDTO).collect(Collectors.toList());
     }
 
     @Override
+    @Transactional
     public List<ScheduleDTO> getScheduleForPet(@PathVariable long petId) {
         return scheduleRepository.getAllForPet(petId).stream().map(SCHEDULE_MAPPER::scheduleToScheduleDTO).collect(Collectors.toList());
 
     }
 
     @Override
+    @Transactional
     public List<ScheduleDTO> getScheduleForEmployee(@PathVariable long employeeId) {
 
         return scheduleRepository.getAllForEmployee(employeeId).stream().map(SCHEDULE_MAPPER::scheduleToScheduleDTO).collect(Collectors.toList());
     }
 
     @Override
+    @Transactional
     public List<ScheduleDTO> getScheduleForCustomer(@PathVariable long customerId) {
         return scheduleRepository.getAllForCustomer(customerId).stream().map(SCHEDULE_MAPPER::scheduleToScheduleDTO).collect(Collectors.toList());
     }

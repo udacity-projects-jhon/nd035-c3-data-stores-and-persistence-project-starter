@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,7 @@ public class CustomerServiceImp implements CustomerService {
     }
 
     @Override
+    @Transactional
     public List<CustomerDTO> getAll() {
         return customerRepository.findAll().stream()
                 .map(customer -> {
@@ -41,6 +43,7 @@ public class CustomerServiceImp implements CustomerService {
     }
 
     @Override
+    @Transactional
     public CustomerDTO save(CustomerDTO customerDTO) {
         Customer customer = USER_MAPPER.customerDTOToCustomer(customerDTO);
         Customer customerSaved = customerRepository.save(customer);
@@ -48,6 +51,7 @@ public class CustomerServiceImp implements CustomerService {
     }
 
     @Override
+    @Transactional
     public CustomerDTO getOwnerByPet(@PathVariable long petId) {
         Customer customer = petRepository.findById(petId)
                 .orElseThrow(NotFound::new)

@@ -9,6 +9,7 @@ import com.udacity.jdnd.course3.critter.user.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.DayOfWeek;
 import java.util.List;
 import java.util.Set;
@@ -26,6 +27,7 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
+    @Transactional
     public EmployeeDTO save(EmployeeDTO employeeDTO) {
         Employee employee = USER_MAPPER.employeeDTOToEmployee(employeeDTO);
         Employee employeeSaved = employeeRepository.save(employee);
@@ -33,6 +35,7 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
+    @Transactional
     public EmployeeDTO getById(long employeeId) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(NotFound::new);
@@ -41,6 +44,7 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
+    @Transactional
     public void setAvailability(Set<DayOfWeek> daysAvailable, long employeeId) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(NotFound::new);
@@ -51,6 +55,7 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
+    @Transactional
     public List<EmployeeDTO> findEmployeesForService(EmployeeRequestDTO employeeDTO) {
         DayOfWeek dayOfWeek = employeeDTO.getDate().getDayOfWeek();
         return employeeRepository.findAllByDaysAvailableAndInSkills(dayOfWeek,

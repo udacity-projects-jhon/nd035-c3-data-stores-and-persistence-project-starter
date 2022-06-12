@@ -19,7 +19,7 @@ public class PetDTO {
 
     private String name;
 
-    private long ownerId;
+    private Long ownerId;
 
     private LocalDate birthDate;
 

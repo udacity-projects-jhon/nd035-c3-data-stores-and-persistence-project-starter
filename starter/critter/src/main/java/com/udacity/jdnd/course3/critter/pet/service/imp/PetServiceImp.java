@@ -10,6 +10,7 @@ import com.udacity.jdnd.course3.critter.user.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +28,7 @@ public class PetServiceImp implements PetService {
     }
 
     @Override
+    @Transactional
     public PetDTO save(PetDTO petDTO) {
         Pet pet = PET_MAPPER.petDTOtoPet(petDTO);
         Customer customer = customerRepository.findById(petDTO.getOwnerId())
@@ -43,6 +45,7 @@ public class PetServiceImp implements PetService {
     }
 
     @Override
+    @Transactional
     public PetDTO getById(long petId) {
         Pet pet = petRepository.findById(petId)
                 .orElseThrow(NotFound::new);
@@ -53,6 +56,7 @@ public class PetServiceImp implements PetService {
     }
 
     @Override
+    @Transactional
     public List<PetDTO> getPetsByOwner(long ownerId) {
         return customerRepository.findById(ownerId)
                 .orElseThrow(NotFound::new)
