@@ -174,7 +174,7 @@ class CritterFunctionalTest {
     }
 
     @Test
-    void testSchedulePetsForServiceWithEmployee() { // TODO
+    void testSchedulePetsForServiceWithEmployee() {
         EmployeeDTO employeeTemp = createEmployeeDTO();
         employeeTemp.setDaysAvailable(Sets.newHashSet(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY));
         EmployeeDTO employeeDTO = userController.saveEmployee(employeeTemp);
